@@ -11,5 +11,6 @@ package com.melvin.mvpframworkdemo.config;
 
 public class Constant {
     public static final int EXCEPTION_TOKEN = 102;
-    public static final String JUHE_API_KEY_WEATHER = "c68efb3ba9623794e37254addcd7647e";
+    //假的key，自己去找个接口玩
+    public static final String JUHE_API_KEY_WEATHER = "1111111";
 }
