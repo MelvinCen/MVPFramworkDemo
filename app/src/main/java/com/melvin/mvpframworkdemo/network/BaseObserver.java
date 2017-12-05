@@ -1,8 +1,8 @@
-package com.melvin.mvpframworkdemo.callback;
+package com.melvin.mvpframworkdemo.network;
 
 
-import com.melvin.mvpframworkdemo.network.progress.ProgressCancelListener;
-import com.melvin.mvpframworkdemo.network.progress.ProgressDialogHandler;
+import com.melvin.mvpframworkdemo.network.progressdialog.ProgressCancelListener;
+import com.melvin.mvpframworkdemo.network.progressdialog.ProgressDialogHandler;
 import com.melvin.mvpframworkdemo.utils.LogUtils;
 
 import io.reactivex.Observer;
@@ -26,19 +26,20 @@ public abstract class BaseObserver<T> implements Observer<T> {
     protected abstract String getTitleMsg();
 
     private ProgressDialogHandler mProgressDialogHandler;
-    private BaseImpl              mBaseImpl;
+    private RxActionManager       mRxActionManager;
 
-    public BaseObserver(BaseImpl baseImpl) {
-        mBaseImpl = baseImpl;
-        if (null != mBaseImpl) {
+    public BaseObserver(RxActionManager rxActionManager) {
+        mRxActionManager = rxActionManager;
+        if (null != mRxActionManager) {
             if (null == mProgressDialogHandler) {
-                mProgressDialogHandler = new ProgressDialogHandler(baseImpl.getContext(), true);
+                LogUtils.e(" BaseObserver初始化创建handler是在线程："+Thread.currentThread().getName());
+                mProgressDialogHandler = new ProgressDialogHandler(rxActionManager.getContext(), true);
                 //取消progressdialog时取消请求
                 if (isNeedProgressDialog()) {
                     mProgressDialogHandler.setOnProgressCancelListener(new ProgressCancelListener() {
                         @Override
                         public void onCancelProgress() {
-                            mBaseImpl.removeDisposable();
+                            mRxActionManager.removeDisposable();
                         }
                     });
                 }
@@ -66,9 +67,9 @@ public abstract class BaseObserver<T> implements Observer<T> {
             showProgressDialog();
         }
 
-        if (null != mBaseImpl) {
+        if (null != mRxActionManager) {
             if (null != d) {
-                mBaseImpl.addDisposable(d);
+                mRxActionManager.addDisposable(d);
             }
         }
     }

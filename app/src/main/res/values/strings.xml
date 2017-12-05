@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MVPFramworkDemo</string>
+    <string name="permission_tips_to_setting">当前应用缺少必要权限。\n请点击\"去设置\"-\"权限\"-打开所需权限。\n最后点击两次后退按钮，即可返回!!!</string>
 </resources>

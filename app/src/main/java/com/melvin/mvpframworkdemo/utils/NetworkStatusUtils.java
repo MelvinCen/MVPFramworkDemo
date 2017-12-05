@@ -17,7 +17,7 @@ import java.util.List;
  * @Description ${TODO}
  */
 
-public class NetworkAvailableUtils {
+public class NetworkStatusUtils {
 
     /**
      * 判断是否联网
@@ -50,23 +50,24 @@ public class NetworkAvailableUtils {
     }
 
     /**
-     *  三、判断WIFI是否打开
+     * 三、判断WIFI是否打开,打开，打开
+     *
      * @param context
      * @return
      */
 
     public static boolean isWifiEnabled(Context context) {
-        ConnectivityManager mgrConn = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        TelephonyManager mgrTel = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        return ((mgrConn.getActiveNetworkInfo() != null && mgrConn
-                .getActiveNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
+        ConnectivityManager mgrConn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        TelephonyManager mgrTel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+        return ((mgrConn.getActiveNetworkInfo() != null && mgrConn.getActiveNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
                 .getNetworkType() == TelephonyManager.NETWORK_TYPE_UMTS);
     }
 
     /**
      * 四、判断是否是3G网络
+     *
      * @param context
      * @return
      */
@@ -83,17 +84,18 @@ public class NetworkAvailableUtils {
     }
 
     /**
-     * 五、判断是wifi还是3g网络,用户的体现性在这里了，wifi就可以建议下载或者在线播放。
+     * 五、判断连接的是wifi还是3g网络
+     *
      * @param context
      * @return
      */
 
     public static boolean isWifi(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
         NetworkInfo networkINfo = cm.getActiveNetworkInfo();
-        if (networkINfo != null
-                && networkINfo.getType() == ConnectivityManager.TYPE_WIFI) {
+
+        if (networkINfo != null && networkINfo.getType() == ConnectivityManager.TYPE_WIFI) {
             return true;
         }
         return false;

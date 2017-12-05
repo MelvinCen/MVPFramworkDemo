@@ -75,6 +75,29 @@ public class FileUtils {
     }
 
     /**
+     * 删除文件
+     *
+     * @param filePath
+     */
+    public static void deleteFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 根据content disposition生成文件名
+     */
+    public static String generateFileKey(String url, String name) {
+        return System.currentTimeMillis() + url + name;
+    }
+
+    /**
      * 获取可以使用的缓存文件
      * @param context
      * @param uniqueName 目录名称

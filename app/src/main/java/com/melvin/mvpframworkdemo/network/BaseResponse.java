@@ -1,4 +1,4 @@
-package com.melvin.mvpframworkdemo.network.retrofit;
+package com.melvin.mvpframworkdemo.network;
 
 import com.google.gson.annotations.SerializedName;
 

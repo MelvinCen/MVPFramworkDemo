@@ -1,4 +1,4 @@
-package com.melvin.mvpframworkdemo.callback;
+package com.melvin.mvpframworkdemo.network;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import io.reactivex.disposables.Disposable;
  *
  */
 
-public interface BaseImpl {
+public interface RxActionManager {
 
     /**
      * 将RxJava的disposable统一管理

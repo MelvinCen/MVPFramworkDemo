@@ -1,4 +1,4 @@
-package com.melvin.mvpframworkdemo.callback;
+package com.melvin.mvpframworkdemo.network;
 
 import android.accounts.NetworkErrorException;
 import android.net.ParseException;
@@ -7,9 +7,8 @@ import android.text.TextUtils;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.melvin.mvpframworkdemo.MyApp;
-import com.melvin.mvpframworkdemo.network.retrofit.ApiException;
 import com.melvin.mvpframworkdemo.utils.LogUtils;
-import com.melvin.mvpframworkdemo.utils.NetworkAvailableUtils;
+import com.melvin.mvpframworkdemo.utils.NetworkStatusUtils;
 import com.melvin.mvpframworkdemo.utils.ToastUtils;
 
 import org.json.JSONException;
@@ -34,21 +33,21 @@ public abstract class MyBaseObserver<T> extends BaseObserver<T> {
 
     private static final String TAG = "MyBaseObserver";
 
-    private boolean isNeedProgress;
-    private String titleMsg;
-    private BaseImpl mBaseImpl;
+    private boolean         isNeedProgress;
+    private String          titleMsg;
+    private RxActionManager mRxActionManager;
 
     public MyBaseObserver() {
         this(null, null);
     }
 
-    public MyBaseObserver(BaseImpl base) {
+    public MyBaseObserver(RxActionManager base) {
         this(base, null);
     }
 
-    public MyBaseObserver(BaseImpl base, String titleMsg) {
+    public MyBaseObserver(RxActionManager base, String titleMsg) {
         super(base);
-        this.mBaseImpl = base;
+        this.mRxActionManager = base;
         this.titleMsg = titleMsg;
         if (TextUtils.isEmpty(titleMsg)) {
             this.isNeedProgress = false;
@@ -72,7 +71,7 @@ public abstract class MyBaseObserver<T> extends BaseObserver<T> {
         LogUtils.e("onBaseError: " + t.toString());
         StringBuffer sb = new StringBuffer();
         sb.append("请求失败：");
-        if (!NetworkAvailableUtils.isNetworkAvailable(MyApp.getAppContext())) {
+        if (!NetworkStatusUtils.isNetworkAvailable(MyApp.getAppContext())) {
             sb.append("无网络连接");
         }else if (t instanceof NetworkErrorException || t instanceof UnknownHostException || t instanceof ConnectException) {
             sb.append("网络异常");
@@ -87,6 +86,8 @@ public abstract class MyBaseObserver<T> extends BaseObserver<T> {
         } else if (t instanceof ApiException) {
             if (((ApiException) t).isTokenExpried()) {
                 sb.append("Token出错");
+            } else {
+                sb.append(((ApiException) t).getErrorMessage());
             }
             //其他的可以再添加
         } else {

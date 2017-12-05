@@ -1,4 +1,4 @@
-package com.melvin.mvpframworkdemo.network.progress;
+package com.melvin.mvpframworkdemo.network.progressdialog;
 
 /**
  *

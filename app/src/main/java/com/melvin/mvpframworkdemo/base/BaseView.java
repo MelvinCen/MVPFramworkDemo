@@ -1,7 +1,7 @@
 package com.melvin.mvpframworkdemo.base;
 
 
-import com.melvin.mvpframworkdemo.network.retrofit.BaseRequestContract;
+import com.melvin.mvpframworkdemo.network.BaseRequestContract;
 
 /**
  * @Author Melvin

@@ -1,4 +1,4 @@
-package com.melvin.mvpframworkdemo.network.retrofit;
+package com.melvin.mvpframworkdemo.network;
 
 /**
  * @Author Melvin

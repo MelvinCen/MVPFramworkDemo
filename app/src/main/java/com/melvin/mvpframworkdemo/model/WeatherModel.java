@@ -20,15 +20,16 @@ import io.reactivex.Observer;
 
 public class WeatherModel extends BaseModel {
 
-    public static WeatherModel getInstance(){
+    public static WeatherModel getInstance() {
         return getPresent(WeatherModel.class);
     }
 
-    public void getWeather(String cityName,Observer<WeatherBean> observer){
-        addParams("cityname",cityName);
+    public void getWeather(String cityName, Observer<WeatherBean> observer) {
+        addParams("cityname", cityName);
         addParams("key", Constant.JUHE_API_KEY_WEATHER);
         Observable observable = mApiService.getWeather(ApiConfig.QUERY_WEATHER, mParams);
-        toSubscribe(observable,observer, null, false,true);
+        toSubscribe(observable, observer);
 
     }
+
 }

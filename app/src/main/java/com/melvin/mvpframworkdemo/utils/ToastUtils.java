@@ -24,7 +24,7 @@ public final class ToastUtils {
      * 获取资源
      */
     private static Resources getResources() {
-        return MyApp.getInstance().getResources();
+        return MyApp.getAppContext().getResources();
     }
 
     /**
@@ -85,7 +85,7 @@ public final class ToastUtils {
     }
 
     private static void showToast(String str) {
-        Context context = MyApp.getInstance();
+        Context context = MyApp.getAppContext();
         if (context != null) {
             showToast(context, str);
         }

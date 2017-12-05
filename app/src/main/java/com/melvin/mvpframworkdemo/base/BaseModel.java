@@ -2,12 +2,18 @@ package com.melvin.mvpframworkdemo.base;
 
 import android.text.TextUtils;
 
-import com.melvin.mvpframworkdemo.network.retrofit.BaseRetrofit;
-import com.melvin.mvpframworkdemo.network.service.ApiService;
+import com.melvin.mvpframworkdemo.MyApp;
+import com.melvin.mvpframworkdemo.network.HttpFunction;
+import com.melvin.mvpframworkdemo.network.RetrofitClient;
+import com.melvin.mvpframworkdemo.network.RxTransforms;
+import com.melvin.mvpframworkdemo.network.api.ApiService;
 import com.melvin.mvpframworkdemo.utils.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 
 /**
  * @Author Melvin
@@ -18,7 +24,7 @@ import java.util.Map;
  * @Description ${TODO}
  */
 
-public class BaseModel extends BaseRetrofit {
+public class BaseModel {
 
     private static final String TAG = "BaseModel";
 
@@ -27,19 +33,46 @@ public class BaseModel extends BaseRetrofit {
     protected Map<String, String> mParams = new HashMap<>();
 
     public BaseModel() {
-        super();
-        mApiService = mRetrofit.create(ApiService.class);
+        mApiService = RetrofitClient.getInstance(MyApp.getAppContext()).create(ApiService.class);
+    }
+
+    protected <T> void toSubscribe(Observable observable, Observer<T> observer) {
+        LogUtils.e("toSubscribe");
+        observable.map(new HttpFunction())
+                .compose(RxTransforms.getSchedulersTransformer())
+                .subscribe(observer);
+
+        //缓存数据,暂时不做
+        // RetrofitCache.load(cacheKey, observableFromNetwork, isSave, forceRefresh).subscribe(observer);
     }
 
 
-    @Override
-    protected Map<String, String> getCommonMap() {
-        Map<String, String> commonMap = new HashMap<>();
-        return commonMap;
+    /**
+     * 本方法目的是提供给继承BaseModel类的子类获取其实例对象的方法
+     *
+     * @param cls 类名
+     * @return
+     */
+
+    protected static <T> T getPresent(Class<T> cls) {
+        T instance = null;
+        try {
+            instance = cls.newInstance();
+            if (instance == null) {
+                return null;
+            }
+            return instance;
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
      * 添加单个参数
+     *
      * @param key
      * @param value
      */
@@ -53,6 +86,7 @@ public class BaseModel extends BaseRetrofit {
 
     /**
      * 添加多个参数，以map的形式
+     *
      * @param params
      */
     protected void addParams(Map<String, String> params) {

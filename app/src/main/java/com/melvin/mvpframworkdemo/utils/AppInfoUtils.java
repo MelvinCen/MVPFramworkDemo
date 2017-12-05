@@ -42,13 +42,13 @@ public class AppInfoUtils {
         return context.getPackageName();
     }
     /**
-     * 获取系统软件包版本号
+     * @return 获取系统软件包版本号名称，仅仅是给用户看
      */
     public static String getVersionName(Context context){
         PackageManager pkgManager = context.getPackageManager();
 
         try{
-            PackageInfo info = pkgManager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            PackageInfo info = pkgManager.getPackageInfo(context.getPackageName(), 0);
 
             return info.versionName;
         }catch (Exception e) {
@@ -56,6 +56,22 @@ public class AppInfoUtils {
             return null;
         }
     }
+
+    /**
+     * @return 当前应用的版本号,用于APP版本升级
+     */
+    public static int getVersionCode(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            return info.versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
     /**
      * 获取手机品牌
      */

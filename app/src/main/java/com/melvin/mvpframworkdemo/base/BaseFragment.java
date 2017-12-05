@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.melvin.mvpframworkdemo.callback.BaseImpl;
+import com.melvin.mvpframworkdemo.network.RxActionManager;
 import com.melvin.mvpframworkdemo.utils.LogUtils;
 
 import java.lang.ref.WeakReference;
@@ -32,7 +32,7 @@ import io.reactivex.disposables.Disposable;
  * @Description ${TODO}
  */
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseImpl {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements RxActionManager {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
 

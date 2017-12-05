@@ -1,4 +1,4 @@
-package com.melvin.mvpframworkdemo.network.progress;
+package com.melvin.mvpframworkdemo.network.progressdialog;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+
+import com.melvin.mvpframworkdemo.utils.LogUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -34,6 +36,8 @@ public class ProgressDialogHandler extends Handler {
     }
 
     private void initProgressDialog(String title) {
+        LogUtils.e(" show dialog是在线程："+Thread.currentThread().getName());
+        LogUtils.e(" show dialog时的looper："+this.getLooper());
         if (pd == null) {
             if (mContextWeakReference == null) {
                 return;

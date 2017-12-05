@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.melvin.mvpframworkdemo.callback.BaseImpl;
+import com.melvin.mvpframworkdemo.network.RxActionManager;
+import com.melvin.mvpframworkdemo.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -27,7 +28,7 @@ import io.reactivex.disposables.Disposable;
  * @Description ${TODO}
  */
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseImpl {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements RxActionManager {
 
     //简单的类名获取
     protected String TAG;
@@ -97,6 +98,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      */
     @Override
     public boolean addDisposable(Disposable disposable) {
+        LogUtils.e("addDisposable别执行,信息："+disposable.toString());
         if (null != mCompositeDisposable) {
             mCompositeDisposable.add(disposable);
         }
