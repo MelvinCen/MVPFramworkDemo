@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias '上海'
-            keyPassword '123456'
-            storeFile file('C:/Users/Melvin/Desktop/MVPFramworkDemo/app/Melvin.jks')
-            storePassword '123456'
-        }
-    }
+//    signingConfigs {
+//        config {
+//            keyAlias '上海'
+//            keyPassword '123456'
+//            storeFile file('C:/Users/Melvin/Desktop/MVPFramworkDemo/app/Melvin.jks')
+//            storePassword '123456'
+//        }
+//    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
